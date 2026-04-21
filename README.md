@@ -22,7 +22,7 @@ body{font-family:'DM Sans',system-ui,sans-serif;background:#f0f2f0;min-height:10
 #loginScreen{
   background:
     linear-gradient(rgba(11,94,215,0.75), rgba(10,25,48,0.85)),
-    url('ALLAN2 (1).png') center/cover no-repeat !important;
+    url('ALLAN2 (1).jpeg') center/cover no-repeat !important;
   position:relative;
 }
 
@@ -405,7 +405,7 @@ tr:hover td{background:#fafaf8}
     </div>
     <div class="loginRight">
       <div class="logo">
-	<img src="ALLAN-logo (1).png" style="width:70px; margin-bottom:10px;">
+	<img src="ALLAN-logo (1).jpeg" style="width:70px; margin-bottom:10px;">
         <h2>Dr. Allan Leal</h2>
         <p>Geriatra y Diabetólogo</p>
 	<p>Sistema de Gestión Médica</p>
