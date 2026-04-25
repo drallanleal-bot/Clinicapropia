@@ -478,10 +478,15 @@ tr:hover td{background:#fafaf8}
     </div>
     <div style="font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.4px;margin-bottom:.5rem">Signos Vitales</div>
     <div class="fRow three">
-      <div class="fGroup"><label>Tensión arterial</label><input type="text" id="hTA" placeholder="120/80 mmHg"/></div>
-      <div class="fGroup"><label>Frec. cardíaca</label><input type="text" id="hFC" placeholder="72 lpm"/></div>
-      <div class="fGroup"><label>Temperatura</label><input type="text" id="hTemp" placeholder="36.5°C"/></div>
-    </div>
+  <div class="fGroup"><label>Presión arterial</label><input type="text" id="hTA" placeholder="120/80 mmHg"/></div>
+  <div class="fGroup"><label>Frec. cardíaca</label><input type="text" id="hFC" placeholder="72 lpm"/></div>
+  <div class="fGroup"><label>Temperatura</label><input type="text" id="hTemp" placeholder="36.5°C"/></div>
+</div>
+
+<div class="fRow three">
+  <div class="fGroup"><label>Frecuencia respiratoria</label><input type="text" id="hFR" placeholder="18 rpm"/></div>
+  <div class="fGroup"><label>Glucosa (GMT)</label><input type="text" id="hGMT" placeholder="mg/dL"/></div>
+</div>
     <div class="fRow">
       <div class="fGroup"><label>Peso / Talla</label><input type="text" id="hPeso" placeholder="70 kg / 1.70 m"/></div>
       <div class="fGroup"><label>Saturación O₂</label><input type="text" id="hSat" placeholder="98%"/></div>
@@ -979,10 +984,29 @@ function prepModalHistoria(pacId) {
 function guardarHistoria() {
   const pid = parseInt(document.getElementById('hPaciente').value);
   if (!pid) { alert('Seleccione un paciente.'); return; }
-  state.historias.push({ id:state.nextHistId++, pacienteId:pid, fecha:document.getElementById('hFecha').value, motivo:document.getElementById('hMotivo').value, diagnostico:document.getElementById('hDiagnostico').value, anamnesis:document.getElementById('hAnamnesis').value, ta:document.getElementById('hTA').value, fc:document.getElementById('hFC').value, temp:document.getElementById('hTemp').value, peso:document.getElementById('hPeso').value, sat:document.getElementById('hSat').value, tratamiento:document.getElementById('hTratamiento').value, obs:document.getElementById('hObs').value });
+
+  state.historias.push({
+    id: state.nextHistId++,
+    pacienteId: pid,
+    fecha: document.getElementById('hFecha').value,
+    motivo: document.getElementById('hMotivo').value,
+    diagnostico: document.getElementById('hDiagnostico').value,
+    anamnesis: document.getElementById('hAnamnesis').value,
+    ta: document.getElementById('hTA').value,
+    fc: document.getElementById('hFC').value,
+    temp: document.getElementById('hTemp').value,
+    fr: document.getElementById('hFR').value,     // ← NUEVO
+    gmt: document.getElementById('hGMT').value,   // ← NUEVO
+    peso: document.getElementById('hPeso').value,
+    sat: document.getElementById('hSat').value,
+    tratamiento: document.getElementById('hTratamiento').value,
+    obs: document.getElementById('hObs').value
+  });
+
   closeModal('modalHistoria');
   renderHistorias();
 }
+
 function verHistoria(id) {
   const h = state.historias.find(x => x.id === id);
   const pac = getPac(h.pacienteId);
@@ -998,12 +1022,14 @@ function verHistoria(id) {
     <span class="badge badge-blue" style="font-size:12px;padding:4px 12px">${h.diagnostico}</span>
   </div>
   <div class="vitalesGrid">
-    <div class="vitalItem"><span>Tensión arterial</span>${h.ta||'—'}</div>
+    <div class="vitalItem"><span>Presión arterial</span>${h.ta||'—'}</div>
     <div class="vitalItem"><span>Frec. cardíaca</span>${h.fc||'—'}</div>
     <div class="vitalItem"><span>Temperatura</span>${h.temp||'—'}</div>
+    <div class="vitalItem"><span>Frecuencia respiratoria</span>${h.fr||'—'}</div>
+    <div class="vitalItem"><span>Glucosa (GMT)</span>${h.gmt||'—'}</div>
     <div class="vitalItem"><span>Peso / Talla</span>${h.peso||'—'}</div>
     <div class="vitalItem"><span>Saturación O₂</span>${h.sat||'—'}</div>
-  </div>
+</div>
   <div style="margin-bottom:1rem"><div style="font-size:10.5px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.35rem">Motivo de consulta</div><div style="font-size:14px">${h.motivo||'—'}</div></div>
   <div style="margin-bottom:1rem"><div style="font-size:10.5px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.35rem">Anamnesis</div><div style="font-size:14px;line-height:1.65;white-space:pre-wrap">${h.anamnesis||'—'}</div></div>
   <div style="margin-bottom:1rem"><div style="font-size:10.5px;font-weight:700;color:#aaa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:.35rem">Tratamiento y prescripción</div><div style="font-size:14px;line-height:1.65;white-space:pre-wrap">${h.tratamiento||'—'}</div></div>
